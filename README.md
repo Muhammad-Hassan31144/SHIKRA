@@ -24,3 +24,4 @@ SHIKRA is a cutting-edge, automated ransomware forensic analysis platform engine
 - **Enterprise-Grade Automation:** SHIKRA minimizes manual intervention and delivers consistent, repeatable forensic results.
 - **Actionable Intelligence:** By centralizing and visualizing forensic data, SHIKRA enables rapid, data-driven decision-making in incident response and threat mitigation.
 
+## Creating Fake Wifi
