@@ -1,0 +1,28 @@
+{
+  "vm_config": {
+    "os_type": "windows10",
+    "memory_mb": 6144,
+    "vcpus": 4,
+    "disk_size_gb": 100,
+    "network": "shikra-isolated",
+    "cpu_mode": "host-passthrough",
+    "machine_type": "q35",
+    "firmware": "bios",
+    "cpu_topology": { "sockets": 1, "cores": 2, "threads": 2 },
+    "rng": true,
+    "smbios": {
+      "vendor": "HP",
+      "product": "EliteBook 850 G8",
+      "serial": "5CD1234567",
+      "uuid": "00000000-0000-4000-9000-111111111111"
+    },
+    "network_adapters": [
+      { "network": "shikra-isolated", "model": "virtio" }
+    ],
+    "additional_storage": [
+      { "size_gb": 50, "bus": "sata" },
+      { "size_gb": 30, "bus": "sata" }
+    ],
+    "serial_path": "/tmp/{VM_NAME}-serial.sock"
+  }
+}
