@@ -1,0 +1,30 @@
+{
+  "vm_config": {
+    "os_type": "windows10",
+    "memory_mb": 8192,
+    "vcpus": 6,
+    "disk_size_gb": 120,
+    "network": "shikra-isolated",
+    "cpu_mode": "host-passthrough",
+    "machine_type": "q35",
+    "firmware": "uefi",
+    "cpu_topology": { "sockets": 1, "cores": 3, "threads": 2 },
+    "rng": true,
+    "smbios": {
+      "vendor": "LENOVO",
+      "product": "ThinkPad P1 Gen 5",
+      "serial": "PARANOID12345",
+      "uuid": "deafbeef-dead-beef-dead-ffffffffffff"
+    },
+    "network_adapters": [
+      { "network": "shikra-isolated", "model": "virtio" },
+      { "network": "shikra-isolated", "model": "e1000e" }
+    ],
+    "additional_storage": [
+      { "size_gb": 40, "bus": "sata" },
+      { "size_gb": 40, "bus": "sata" },
+      { "size_gb": 80, "bus": "virtio" }
+    ],
+    "serial_path": "/tmp/{VM_NAME}-serial.sock"
+  }
+}
