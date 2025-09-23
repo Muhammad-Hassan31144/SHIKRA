@@ -1,0 +1,25 @@
+{
+  "vm_config": {
+    "os_type": "windows10",
+    "memory_mb": 4096,
+    "vcpus": 2,
+    "disk_size_gb": 60,
+    "network": "shikra-isolated",
+    "cpu_mode": "host-passthrough",
+    "machine_type": "q35",
+    "firmware": "bios",
+    "cpu_topology": { "sockets": 1, "cores": 2, "threads": 1 },
+    "rng": true,
+    "smbios": {
+      "vendor": "Dell Inc.",
+      "product": "OptiPlex 7090",
+      "serial": "RANDOM_SERIAL",
+      "uuid": "00000000-0000-4000-9000-000000000000"
+    },
+    "network_adapters": [
+      { "network": "shikra-isolated", "model": "virtio" }
+    ],
+    "additional_storage": [],
+    "serial_path": "/tmp/{VM_NAME}-serial.sock"
+  }
+}
