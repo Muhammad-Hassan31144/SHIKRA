@@ -1,0 +1,177 @@
+# pyproject.toml
+
+# This section defines the build system for the project.
+# It tells tools like pip how to build the project from source.
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# This is the main section for project metadata.
+[project]
+# The official name of the package.
+name = "shikra"
+# The current version, following semantic versioning.
+version = "2.0.0"
+# The authors of the project.
+authors = [
+  { name="Your Name", email="you@example.com" },
+]
+# A short, one-sentence description of the project.
+description = "SHIKRA: Sophisticated Heuristic Integration for Knowledge-based Ransomware Analysis - An adversary-aware ransomware analysis framework through multi-layered forensic collection."
+# The path to the file containing the long description (your README).
+readme = "README.md"
+# The minimum version of Python required to run the project.
+requires-python = ">=3.9"
+# Standard classifiers to help users find your project.
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Security",
+    "Topic :: Security :: Cryptography",
+    "Topic :: System :: Forensics",
+    "Topic :: System :: Networking :: Monitoring",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "Development Status :: 4 - Beta",
+]
+
+# This section lists all the Python libraries the project depends on.
+# Pip will automatically install these when a user installs your package.
+dependencies = [
+    # Core framework dependencies
+    "pandas>=1.5.0",                # Data processing for analysis results
+    "typer[all]>=0.9.0",           # CLI framework
+    "rich>=13.0.0",                # Rich text and beautiful formatting
+    "Jinja2>=3.1.0",               # Template engine for reports
+    
+    # Analysis and forensics dependencies
+    "volatility3>=2.4.0",          # Memory analysis
+    "yara-python>=4.3.0",          # YARA rule engine for malware detection
+    "python-magic>=0.4.27",        # File type detection
+    "pefile>=2024.8.0",            # PE file analysis
+    "ssdeep>=3.4.0",               # Fuzzy hashing for malware similarity
+    "oletools>=0.60.0",            # Microsoft Office document analysis
+    
+    # Network analysis dependencies  
+    "maxminddb>=2.2.0",            # GeoIP database reader
+    
+    # Security and threat intelligence
+    "virustotal-api>=1.1.11",      # VirusTotal integration
+    
+    # Data processing and utilities
+    "python-dateutil>=2.9.0",      # Date/time handling
+    "typing-extensions>=4.0.0",    # Type hints support
+    "requests>=2.32.0",            # HTTP requests
+    "PyYAML>=6.0.0",               # YAML configuration files
+]
+
+# Optional dependencies for different features
+[project.optional-dependencies]
+# PDF report generation
+pdf = [
+    "WeasyPrint>=59.0",
+    "pillow>=10.0.0"
+]
+
+# Development and testing tools
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0", 
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "coverage>=7.0.0",
+]
+
+# Static analysis tools (capa integration)
+static = [
+    "flare-capa>=7.0.0",           # FLARE CAPA for capability analysis
+]
+
+# Network analysis enhancements
+network = [
+    "aiohttp>=3.8.0",             # Async HTTP for enhanced network analysis
+    "tshark>=0.1.0",              # Wireshark tshark wrapper (if available)
+]
+
+# This section defines the command-line scripts that will be created upon installation.
+[project.scripts]
+shikra = "shikra.cli:app"
+
+# This section provides useful links related to the project.
+[project.urls]
+Homepage = "https://github.com/your-username/shikra-framework"
+"Bug Tracker" = "https://github.com/your-username/shikra-framework/issues"
+Documentation = "https://github.com/your-username/shikra-framework/docs"
+Repository = "https://github.com/your-username/shikra-framework"
+
+# Tool configuration sections
+[tool.black]
+line-length = 120
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --strict-markers"
+testpaths = [
+    "tests",
+]
+asyncio_mode = "auto"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+[tool.coverage.run]
+source = ["src/shikra"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
