@@ -1,0 +1,50 @@
+{
+  
+  "capa_rules": "data/capa/rules",
+  "yara_rules": "data/yara_rules",
+  "tools": {
+    "capa": {
+      "enabled": true,
+      "timeout": 45
+    },
+    "pefile": {
+      "enabled": true,
+      "fast_load": true,
+      "timeout": 30
+    },
+    "yara": {
+      "enabled": true,
+      "timeout": 30
+    },
+    "strings": {
+      "enabled": true,
+      "min_length": 6,
+      "timeout": 30
+    },
+    "exiftool": {
+      "enabled": true,
+      "timeout": 15
+    },
+    "ssdeep": {
+      "enabled": true,
+      "timeout": 15
+    }
+  },
+  "safety": {
+    "max_file_size": 104857600,
+    "memory_limit": 536870912,
+    "cpu_limit": 50,
+    "timeout_global": 300
+  },
+  "quarantine": {
+    "path": "./quarantine",
+    "auto_cleanup": true,
+    "retention_days": 7
+  },
+  "known_fuzzy_hashes": {},
+  "output": {
+    "format": "json",
+    "include_raw_data": false,
+    "compress_results": true
+  }
+}
