@@ -1,0 +1,162 @@
+{
+  "T1003.001": {
+    "name": "OS Credential Dumping: LSASS Memory",
+    "tactic": "Credential Access",
+    "description": "Adversaries may attempt to access credential material stored in the process memory of the Local Security Authority Subsystem Service (LSASS).",
+    "indicators": {
+      "process_access": {
+        "target_process": "lsass.exe",
+        "source_processes": ["rundll32.exe", "svchost.exe", "procdump.exe", "mimikatz.exe"]
+      }
+    }
+  },
+  "T1021.001": {
+    "name": "Remote Services: Remote Desktop Protocol",
+    "tactic": "Lateral Movement",
+    "description": "Adversaries may use valid accounts to log into a computer using RDP. This is a common method for lateral movement.",
+    "indicators": {
+      "network": {
+        "destination_port": 3389
+      },
+      "process_creation": {
+        "process_names": ["mstsc.exe"]
+      }
+    }
+  },
+  "T1047": {
+    "name": "Windows Management Instrumentation",
+    "tactic": "Execution",
+    "description": "Adversaries may abuse WMI to execute malicious commands and payloads.",
+    "indicators": {
+      "process_creation": {
+        "process_names": ["wmic.exe", "WmiPrvSE.exe"],
+        "cmdline_regex": ["process call create", "path AntiVirusProduct get"]
+      }
+    }
+  },
+  "T1053.005": {
+    "name": "Scheduled Task/Job: Scheduled Task",
+    "tactic": "Execution, Persistence, Privilege Escalation",
+    "description": "Adversaries may abuse the schtasks.exe utility to schedule execution of malicious code.",
+    "indicators": {
+      "process_creation": {
+        "process_names": ["schtasks.exe"],
+        "cmdline_regex": ["/create", "/sc onlogon", "/sc onstart"]
+      }
+    }
+  },
+  "T1059.001": {
+    "name": "Command and Scripting Interpreter: PowerShell",
+    "tactic": "Execution",
+    "description": "Adversaries may abuse PowerShell to execute a wide range of commands and scripts.",
+    "indicators": {
+      "process_creation": {
+        "process_names": ["powershell.exe"],
+        "cmdline_regex": ["-enc", "-nop", "-noni", "executionpolicy bypass", "iex", "downloadstring"]
+      }
+    }
+  },
+  "T1059.003": {
+    "name": "Command and Scripting Interpreter: Windows Command Shell",
+    "tactic": "Execution",
+    "description": "Adversaries may abuse the command shell (cmd.exe) for execution.",
+    "indicators": {
+      "process_creation": {
+        "process_names": ["cmd.exe"],
+        "cmdline_regex": ["/c", "/k"]
+      }
+    }
+  },
+  "T1071.001": {
+    "name": "Application Layer Protocol: Web Protocols",
+    "tactic": "Command and Control",
+    "description": "Adversaries may communicate using HTTP/S protocols to blend in with normal traffic.",
+    "indicators": {
+      "network": {
+        "destination_port": [80, 443, 8080],
+        "user_agent_regex": ["(Mozilla/5.0 \\(compatible; MSIE 9.0)|(curl/)|(Wget/))", "^$"]
+      }
+    }
+  },
+  "T1071.004": {
+    "name": "Application Layer Protocol: DNS",
+    "tactic": "Command and Control",
+    "description": "Adversaries may use DNS for C2 communications, often with suspicious or algorithmically generated domains.",
+    "indicators": {
+      "network": {
+        "domain_regex": ["\\.onion", "\\.bit", "\\.dynu\\.com", "\\.no-ip\\.com"],
+        "notes": ["Look for high frequency of NXDOMAIN responses or unusually long query names for DGA detection."]
+      }
+    }
+  },
+  "T1105": {
+    "name": "Ingress Tool Transfer",
+    "tactic": "Command and Control",
+    "description": "Adversaries may transfer tools or other files from an external system into a compromised environment.",
+    "indicators": {
+      "process_creation": {
+        "process_names": ["bitsadmin.exe", "certutil.exe", "powershell.exe"],
+        "cmdline_regex": ["/transfer", "-urlcache -split -f", "DownloadFile"]
+      }
+    }
+  },
+  "T1112": {
+    "name": "Modify Registry",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may modify the registry to hide artifacts or disable security features.",
+    "indicators": {
+      "registry": {
+        "key_path_regex": ["DisableAntiSpyware", "DisableAntiVirus", "FirewallPolicy\\\\StandardProfile"]
+      }
+    }
+  },
+  "T1218.011": {
+    "name": "System Binary Proxy Execution: Rundll32",
+    "tactic": "Defense Evasion",
+    "description": "Adversaries may abuse rundll32.exe to execute arbitrary code. This is a common technique for malware.",
+    "indicators": {
+      "process_creation": {
+        "process_names": ["rundll32.exe"],
+        "cmdline_regex": ["javascript:", "url.dll,FileProtocolHandler", "shell32.dll,Control_RunDLL"]
+      }
+    }
+  },
+  "T1486": {
+    "name": "Data Encrypted for Impact",
+    "tactic": "Impact",
+    "description": "Adversaries may encrypt data on target systems to interrupt availability to system and network resources.",
+    "indicators": {
+      "file": {
+        "operation": ["WriteFile", "CreateFile"],
+        "filename_regex": ["\\.locked$", "\\.crypted$", "\\.ryk$"],
+        "notes": ["Often accompanied by mass file modification/deletion and the creation of ransom notes."]
+      }
+    }
+  },
+  "T1490": {
+    "name": "Inhibit System Recovery",
+    "tactic": "Impact",
+    "description": "Adversaries may delete shadow copies or other backups to prevent recovery.",
+    "indicators": {
+      "process_creation": {
+        "process_names": ["vssadmin.exe", "wmic.exe", "bcdedit.exe"],
+        "cmdline_regex": ["delete shadows", "shadowcopy delete", "{default} bootstatuspolicy ignoreallfailures"]
+      }
+    }
+  },
+  "T1547.001": {
+    "name": "Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder",
+    "tactic": "Persistence, Privilege Escalation",
+    "description": "Adversaries may achieve persistence by adding entries to registry run keys or startup folders.",
+    "indicators": {
+      "registry": {
+        "key_path_regex": [
+          "\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run",
+          "\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce",
+          "\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\Explorer\\\\Run",
+          "\\\\Software\\\\Wow6432Node\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run"
+        ]
+      }
+    }
+  }
+}

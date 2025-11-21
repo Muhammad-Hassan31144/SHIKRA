@@ -1,0 +1,88 @@
+{
+  "general": {
+    "max_events_to_process": 1000000,
+    "max_registry_events": 100,
+    "high_risk_countries": ["CN", "RU", "KP", "IR", "SY", "PK"],
+    "use_granular_configs": true,
+    "granular_config_path": "config/procmon"
+  },
+  "detection_patterns": {
+    "suspicious_process_names": [
+      "mimikatz.exe", "procdump.exe", "psexec.exe", "nc.exe", "ncat.exe",
+      "vssadmin.exe", "wce.exe", "fgdump.exe", "pwdump.exe", "revshell.exe",
+      "certutil.exe", "bitsadmin.exe", "wmic.exe", "whoami.exe", "net.exe"
+    ],
+    "suspicious_cmdline_regex": [
+      "-enc(odedcommand)?\\s+[A-Za-z0-9+/=]{20,}",
+      "IEX\\s*\\(New-Object Net.WebClient\\).DownloadString",
+      "executionpolicy\\s+bypass",
+      "wmic.*process\\s+call\\s+create",
+      "vssadmin.*delete\\s+shadows",
+      "certutil.*-urlcache.*-f",
+      "bitsadmin.*/transfer",
+      "reg\\.exe\\s+add.*\\\\Run"
+    ],
+    "suspicious_registry_key_regex": [
+      "\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run$",
+      "\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce$",
+      "\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Policies\\\\Explorer\\\\Run$",
+      "\\\\Software\\\\Wow6432Node\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run$",
+      "\\\\System\\\\CurrentControlSet\\\\Services\\\\",
+      "\\\\Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\UserinitPM",
+      "\\\\Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\Notify",
+      "\\\\Software\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Image File Execution Options\\\\",
+      "\\\\System\\\\CurrentControlSet\\\\Control\\\\Lsa\\\\Security Packages",
+      "DisableAntiSpyware",
+      "DisableAntiVirus"
+    ],
+    "suspicious_file_path_regex": [
+      "AppData\\\\Local\\\\Temp\\\\.+\\.(exe|dll|ps1|vbs|bat|scr)$",
+      "C:\\\\Windows\\\\Temp\\\\.+\\.(exe|dll|ps1|vbs|bat|scr)$",
+      "DECRYPT_INSTRUCTIONS\\.txt",
+      "HELP_DECRYPT\\.txt",
+      "RECOVERY_KEY\\.txt",
+      "\\.ryk$",
+      "\\.locky$",
+      "\\.cerber$"
+    ]
+  },
+  "operations_to_monitor": {
+    "file": [
+      "CreateFile",
+      "WriteFile",
+      "DeleteFile",
+      "SetRenameInformationFile"
+    ],
+    "registry": [
+      "RegSetValue",
+      "RegCreateKey",
+      "RegDeleteKey",
+      "RegDeleteValue"
+    ],
+    "network": [
+      "TCP Connect",
+      "UDP Send"
+    ],
+    "process": [
+      "Process Create",
+      "Process Start",
+      "Thread Create"
+    ]
+  },
+  "thresholds": {
+    "mass_file_operations": {
+      "count": 100,
+      "time_window_seconds": 60,
+      "operations": ["WriteFile", "SetRenameInformationFile"]
+    },
+    "mass_registry_creations": {
+      "count": 50,
+      "time_window_seconds": 60
+    }
+  },
+  "filtering": {
+    "noise_reduction_level": "balanced",
+    "use_behavioral_filters": true,
+    "use_malware_patterns": true
+  }
+}

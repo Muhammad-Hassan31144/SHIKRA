@@ -1,0 +1,71 @@
+{
+  "general": {
+    "max_packets_to_process": 50000,
+    "enable_geoip_lookup": true,
+    "high_risk_countries": [
+      "CN", "RU", "KP", "IR", "SY", "BY", "VE"
+    ]
+  },
+  "detection_patterns": {
+    "suspicious_domains_regex": [
+      "\\.onion$",
+      "\\.bazar$",
+      "\\.bit$",
+      "\\.top$",
+      "\\.xyz$",
+      "\\.monster$",
+      "tor2web",
+      "\\.ddns\\.net$",
+      "\\.no-ip\\.com$",
+      "\\.duckdns\\.org$"
+    ],
+    "suspicious_user_agents_regex": [
+      "^$",
+      "curl/[0-9]",
+      "Wget/[0-9]",
+      "sqlmap/",
+      "nmap",
+      "masscan",
+      "powershell",
+      "python-requests",
+      "Go-http-client",
+      "Mozilla/4.0 \\(compatible; MSIE 6.0; Windows NT 5.1\\)"
+    ],
+    "suspicious_tls_issuers_regex": [
+      "Let's Encrypt",
+      "Sectigo",
+      "GoDaddy",
+      "Acme"
+    ],
+    "suspicious_http_keywords": [
+      "ransom", "crypt", "bitcoin", "monero", "payment", "decrypt", "wallet", ".exe", ".dll", ".zip"
+    ],
+    "suspicious_dns_query_types": ["ANY", "TXT"]
+  },
+  "protocol_analysis": {
+    "suspicious_ports": [21, 22, 23, 25, 445, 1337, 31337, 4444, 5555, 6667, 8080, 9050],
+    "uncommon_protocols_on_lan": ["IRC", "FTP", "Telnet", "SMBv1"]
+  },
+  "thresholds": {
+    "c2_beaconing": {
+      "min_packet_count": 10,
+      "max_interval_std_dev_seconds": 2.0,
+      "max_payload_size_std_dev_bytes": 10
+    },
+    "dga_detection": {
+      "min_domain_length": 12,
+      "min_entropy": 3.5
+    },
+    "data_exfiltration": {
+      "min_upload_bytes": 5242880,
+      "suspicious_file_extensions_regex": ["\\.zip$", "\\.rar$", "\\.7z$", "\\.bak$", "\\.pst$"]
+    },
+    "dns_analysis": {
+      "high_nxdomain_ratio": 0.5,
+      "max_queries_per_minute": 100
+    },
+    "connection_analysis": {
+      "max_conns_per_minute_to_host": 200
+    }
+  }
+}

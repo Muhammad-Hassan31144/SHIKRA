@@ -1,0 +1,87 @@
+{
+  "suspicious_names": [
+    "mimikatz", "procdump", "psexec", "nc.exe", "ncat.exe", "putty.exe",
+    "vssadmin", "wce.exe", "fgdump", "pwdump", "revshell", "powercat",
+    "inject", "hollow", "proxy", "hack", "debug", "test", "ransom", "crypt"
+  ],
+  "suspicious_paths": [
+    "C:\\Users\\*\\AppData\\Local\\Temp",
+    "C:\\Windows\\Temp",
+    "C:\\$Recycle.Bin",
+    "C:\\PerfLogs",
+    "C:\\ProgramData\\"
+  ],
+  "suspicious_cmdline_keywords": [
+    " -enc ", " -e ", " JAB", " IEX", " hidden ", " downloadstring",
+    " frombase64string", " executionpolicy bypass", " noni ", " nop ",
+    "wmic.exe.*process call create", "delete shadows", "reg add HK.*\\\\Run"
+  ],
+  "process_baselines": {
+    "system": {
+        "parent": null,
+        "path_regex": null,
+        "should_not_spawn": ["cmd.exe", "powershell.exe", "wscript.exe", "cscript.exe"]
+    },
+    "smss.exe": {
+        "parent": "system",
+        "path_regex": "^C:\\\\Windows\\\\System32\\\\smss\\.exe$",
+        "should_not_spawn": ["cmd.exe", "powershell.exe"]
+    },
+    "csrss.exe": {
+        "parent": "smss.exe",
+        "path_regex": "^C:\\\\Windows\\\\System32\\\\csrss\\.exe$",
+        "should_not_spawn": ["any_process"]
+    },
+    "wininit.exe": {
+        "parent": "smss.exe",
+        "path_regex": "^C:\\\\Windows\\\\System32\\\\wininit\\.exe$",
+        "should_not_spawn": ["cmd.exe", "powershell.exe"]
+    },
+    "winlogon.exe": {
+        "parent": "smss.exe",
+        "path_regex": "^C:\\\\Windows\\\\System32\\\\winlogon\\.exe$",
+        "should_not_spawn": ["cmd.exe", "powershell.exe"]
+    },
+    "services.exe": {
+        "parent": "wininit.exe",
+        "path_regex": "^C:\\\\Windows\\\\System32\\\\services\\.exe$",
+        "should_not_spawn": ["cmd.exe", "powershell.exe"]
+    },
+    "lsass.exe": {
+        "parent": "wininit.exe",
+        "path_regex": "^C:\\\\Windows\\\\System32\\\\lsass\\.exe$",
+        "should_not_spawn": ["any_process"]
+    },
+    "svchost.exe": {
+        "parent": "services.exe",
+        "path_regex": "^C:\\\\Windows\\\\System32\\\\svchost\\.exe$",
+        "should_not_spawn": []
+    },
+    "explorer.exe": {
+        "parent": "userinit.exe",
+        "path_regex": "^C:\\\\Windows\\\\explorer\\.exe$",
+        "should_not_spawn": []
+    }
+  },
+  "ransomware_indicators": {
+    "mutex_keywords": [
+      "wannacry", "locky", "cerber", "cryptolocker", "thor", "zeus",
+      "crypto", "lock", "encrypt", "ransom", "mutex", "global", "ryk"
+    ],
+    "ransom_note_filenames": [
+      "DECRYPT_INSTRUCTIONS.txt", "HELP_DECRYPT.txt", "RECOVERY_KEY.txt",
+      "WanaDecryptor", "HowToDecrypt.txt", "README.txt", "!Recovery.txt"
+    ],
+    "bitcoin_regex": "[13][a-km-zA-HJ-NP-Z1-9]{25,34}|bc1[a-z0-9]{39,59}",
+    "monero_regex": "4[0-9AB][1-9A-HJ-NP-Za-km-z]{93}",
+    "onion_regex": "[a-z2-7]{16,56}\\.onion"
+  },
+  "file_signatures": {
+    "PE": "4d5a",
+    "PDF": "25504446",
+    "ZIP": "504b0304",
+    "DOCX": "504b03040a000600",
+    "XLSX": "504b03040a000600",
+    "PPTX": "504b03040a000600"
+  }
+}

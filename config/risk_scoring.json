@@ -1,0 +1,74 @@
+{
+  "global_weights": {
+    "procmon": 0.4,
+    "memory": 0.4,
+    "network": 0.2
+  },
+  "scores": {
+    "procmon": {
+      "suspicious_process_name": 1.5,
+      "suspicious_cmdline_regex": 2.5,
+      "suspicious_registry_key_regex": 2.0,
+      "suspicious_file_path_regex": 1.0,
+      "mass_file_operations": 3.0,
+      "mass_registry_creations": 2.0
+    },
+    "memory": {
+      "process_baseline_violation": 2.0,
+      "yara_match_critical": 4.0,
+      "yara_match_high": 2.5,
+      "yara_match_medium": 1.0,
+      "code_injection_malfind": 3.5,
+      "ransomware_mutex": 3.0,
+      "ransomware_note": 2.5,
+      "crypto_address": 2.0
+    },
+    "network": {
+      "suspicious_domain_regex": 1.5,
+      "suspicious_user_agent_regex": 1.0,
+      "suspicious_tls_issuer_regex": 1.0,
+      "c2_beaconing_pattern": 4.0,
+      "data_exfiltration_pattern": 3.0,
+      "high_nxdomain_ratio": 1.5,
+      "connection_to_high_risk_country": 0.5
+    }
+  },
+  "correlation_engine": {
+    "amplifiers": [
+      {
+        "description": "Suspicious process command creating a network connection to a suspicious domain.",
+        "conditions": [
+          {"source": "procmon", "indicator": "suspicious_cmdline_regex"},
+          {"source": "network", "indicator": "suspicious_domain_regex"}
+        ],
+        "multiplier": 1.5
+      },
+      {
+        "description": "Ransomware note found in memory and mass file encryption detected in Procmon.",
+        "conditions": [
+          {"source": "memory", "indicator": "ransomware_note"},
+          {"source": "procmon", "indicator": "mass_file_operations"}
+        ],
+        "multiplier": 2.0
+      },
+      {
+        "description": "Code injection detected in memory from a process also seen making suspicious network calls.",
+        "conditions": [
+          {"source": "memory", "indicator": "code_injection_malfind"},
+          {"source": "network", "indicator": "c2_beaconing_pattern"}
+        ],
+        "multiplier": 1.8
+      }
+    ]
+  },
+  "final_risk_mapping": {
+    "thresholds": [
+      {"level": "Informational", "score": 1},
+      {"level": "Low", "score": 3},
+      {"level": "Medium", "score": 5},
+      {"level": "High", "score": 7},
+      {"level": "Critical", "score": 9}
+    ],
+    "max_score": 10.0
+  }
+}
