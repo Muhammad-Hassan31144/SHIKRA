@@ -1,0 +1,21 @@
+# Default additional plugins configuration for ransomkit memory analysis
+# Format: plugin_name or plugin_name:max_entries
+# Lines starting with # are comments
+
+# File system analysis (useful for finding malicious files)
+windows.filescan.FileScan:300
+
+# DLL analysis (useful for finding injected DLLs)
+windows.dlllist.DllList:150
+
+# Registry analysis (persistence mechanisms)
+windows.registry.hivelist.HiveList
+
+# Memory analysis (code injection detection)
+windows.vadinfo.VadInfo:200
+
+# Security analysis (credential extraction)
+windows.getsids.GetSIDs
+
+# Process analysis (hidden processes)
+windows.psscan.PsScan
