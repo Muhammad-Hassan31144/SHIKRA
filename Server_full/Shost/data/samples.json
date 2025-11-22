@@ -1,0 +1,36 @@
+{
+  "4d183a9a-a1d8-4467-9646-b89eaf548470": {
+    "id": "4d183a9a-a1d8-4467-9646-b89eaf548470",
+    "filename": "claudetsim.exe",
+    "file_path": "/tmp/shost/samples/98ae33b3-df82-4823-af73-3e85b7cdfa67_claudetsim.exe",
+    "file_hash": "b53d65381a668cbbae65cdb1f181f4956505b626096daa8d77146695f6ff2e93",
+    "file_size": 277235,
+    "status": "completed",
+    "assigned_agent": "agent-win10",
+    "analysis_id": "88374ed4-11c7-47ed-84ce-4cf57a2e1f44",
+    "uploaded_at": "2025-11-09T07:56:19.318065",
+    "assigned_at": "2025-11-09T10:00:53.382221",
+    "completed_at": "2025-11-09T10:01:31.636147",
+    "priority": 5,
+    "retries": 0,
+    "max_retries": 3,
+    "updated_at": "2025-11-09T10:01:31.636141"
+  },
+  "e65cea04-38ba-46ce-8cb7-9c471fd4e7b0": {
+    "id": "e65cea04-38ba-46ce-8cb7-9c471fd4e7b0",
+    "filename": "shikrathreatsimulator.exe",
+    "file_path": "/tmp/shost/samples/6973a88f-8f23-4d7b-bfb4-c60836467298_shikrathreatsimulator.exe",
+    "file_hash": "60f0fd11b68e02538e716dbe7d2e69d1898919e320ec4100b8e9c5d51a5e7d69",
+    "file_size": 266097,
+    "status": "completed",
+    "assigned_agent": "agent-win10",
+    "analysis_id": "51eaf7b3-a366-42b2-b10c-5226f014ae68",
+    "uploaded_at": "2025-11-16T11:39:33.639475",
+    "assigned_at": "2025-11-16T11:39:59.716431",
+    "completed_at": "2025-11-16T11:42:13.780379",
+    "priority": 5,
+    "retries": 0,
+    "max_retries": 3,
+    "updated_at": "2025-11-16T11:42:13.780372"
+  }
+}

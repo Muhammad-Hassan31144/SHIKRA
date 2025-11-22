@@ -1,0 +1,21 @@
+{
+  "agent-win10": {
+    "agent_id": "agent-win10",
+    "vm_name": "DESKTOP-Q6OSOEU",
+    "description": "win10 analysis VM bold",
+    "enrollment_key_hash": "fc8db869e446f5aa258caf01a1b6d69a4ddfd792a6e7202b2fb23c59fad1e02c",
+    "enrollment_used": true,
+    "enrollment_created": "2025-11-09T09:59:30.498368",
+    "enrollment_expires": 1763287170,
+    "status": "active",
+    "first_seen": 1762682441.3332686,
+    "last_seen": 1762682441.333269,
+    "token_sha": "62809e64f6caebad914cbe39ec3662b1a36b32b85e5d15607b2861ac7d0c3ce2",
+    "token_expires": 1794200441,
+    "machine_fingerprint": "DESKTOP-Q6OSOEU_fingerprint",
+    "hostname": "DESKTOP-Q6OSOEU",
+    "registration_count": 1,
+    "last_registration": "2025-11-09T10:00:41.333275",
+    "last_updated": "2025-11-16T11:42:43.801199"
+  }
+}

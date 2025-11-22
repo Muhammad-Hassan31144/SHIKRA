@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Success - Shikra Host</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        .success-icon {
+            text-align: center;
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .info-section {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .info-value {
+            color: #666;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .key-section {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .key-section h2 {
+            color: #e65100;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .key-section h2::before {
+            content: '🔑';
+            margin-right: 10px;
+        }
+        
+        .enrollment-key {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            word-break: break-all;
+            border: 1px solid #ff9800;
+            margin-bottom: 15px;
+            user-select: all;
+        }
+        
+        .copy-btn {
+            background: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #f57c00;
+        }
+        
+        .warning-box {
+            background: #ffebee;
+            border-left: 4px solid #c62828;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+        
+        .warning-box h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #c62828;
+        }
+        
+        .warning-box p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .instructions {
+            background: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+        
+        .instructions h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #2e7d32;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            color: #666;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .instructions code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+    <script>
+        function copyKey() {
+            const keyElement = document.getElementById('enrollment-key');
+            const text = keyElement.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.style.background = '#2e7d32';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#ff9800';
+                }, 2000);
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✅</div>
+        <h1>Enrollment Key Generated!</h1>
+        <p class="subtitle">Agent v2.0 enrollment key ready</p>
+        
+        <div class="info-section">
+            <div class="info-row">
+                <span class="info-label">Agent ID:</span>
+                <span class="info-value">{{ agent_id }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">VM Name:</span>
+                <span class="info-value">{{ agent_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Expires In:</span>
+                <span class="info-value">{{ expires_in_days or 7 }} days</span>
+            </div>
+        </div>
+        
+        <div class="key-section">
+            <h2>One-Time Enrollment Key</h2>
+            <div class="enrollment-key" id="enrollment-key">{{ enrollment_key }}</div>
+            <button class="copy-btn" id="copy-btn" onclick="copyKey()">📋 Copy Key to Clipboard</button>
+        </div>
+        
+        <div class="warning-box">
+            <h3>⚠️ CRITICAL - READ CAREFULLY</h3>
+            <p>
+                This enrollment key is shown <strong>ONLY ONCE</strong> and cannot be retrieved later!<br>
+                Copy it now before leaving this page. The key expires in {{ expires_in_days or 7 }} days 
+                and becomes invalid after first use.
+            </p>
+        </div>
+        
+        <div class="instructions">
+            <h3>📝 Agent v2.0 Deployment Steps</h3>
+            <ol>
+                <li><strong>Copy the key above</strong> (click the copy button)</li>
+                <li>Transfer <code>ShikraAgent.exe</code> to Windows VM (e.g., <code>C:\SecurityHealth\</code>)</li>
+                <li>Open Command Prompt as Administrator on the VM</li>
+                <li>Run enrollment command:
+                    <pre style="background:#f5f5f5;padding:10px;margin:10px 0;border-radius:4px;"><code>cd C:\SecurityHealth
+ShikraAgent.exe --enroll {{ enrollment_key }}</code></pre>
+                </li>
+                <li>When prompted, enter Shost URL: <code>http://YOUR_HOST_IP:8080/api/v1</code></li>
+                <li>Agent auto-creates <code>agent_config.json</code> with credentials</li>
+                <li>Start agent: <code>ShikraAgent.exe</code></li>
+                <li>Agent will start polling for samples automatically</li>
+            </ol>
+        </div>
+        
+        <div class="btn-group">
+            <a href="/admin/enroll" class="btn btn-secondary">Generate Another Key</a>
+            <a href="/admin/agents" class="btn btn-primary">View All Agents</a>
+        </div>
+    </div>
+</body>
+</html>
